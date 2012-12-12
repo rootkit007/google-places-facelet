@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib version="2.0"
+                xmlns="http://java.sun.com/xml/ns/javaee"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd">
+                
+    <namespace>http://greatnowhere.com/jsf</namespace>
+    <tag>
+        <tag-name>GooglePlace</tag-name>
+        <component>
+            <component-type>GooglePlace</component-type>
+            <renderer-type>com.greatnowhere.jsf.components.GooglePlaceComponentRenderer</renderer-type>
+        </component>
+		<attribute>
+			<description><![CDATA[Value expression evaluating to GooglePlace object]]></description>
+			<name>place</name>
+			<required>false</required>
+			<type>java.lang.Object</type>
+		</attribute>
+    </tag>
+</facelet-taglib>
