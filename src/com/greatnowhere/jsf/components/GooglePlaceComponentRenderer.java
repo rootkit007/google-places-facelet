@@ -86,10 +86,16 @@ public class GooglePlaceComponentRenderer extends InputTextRenderer {
 		ResponseWriter writer = context.getResponseWriter();
 		String placesResultId = _component.getPlaceResultElementId(context);
 		
-		writer.startElement("script", null);
-		// FIXME: include script in head only once per view. this should be ResourceDependency but they dont allow external resources
-		writer.writeAttribute("src", "https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true", null);
-		writer.endElement("script");
+		if ( _component.getLoadAPI() ) {
+			writer.startElement("script", null);
+			String _apiURL= "https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true";
+			if ( _component.getGoogleAPIKey() != null && _component.getGoogleAPIKey().length() > 0 ) {
+				_apiURL += "&key=" + _component.getGoogleAPIKey();
+			}
+			// FIXME: include script in head only once per view. this should be ResourceDependency but they dont allow external resources
+			writer.writeAttribute("src", _apiURL, null);
+			writer.endElement("script");
+		}
 
 		writer.startElement("input", null);
 		writer.writeAttribute("id", placesResultId, null);

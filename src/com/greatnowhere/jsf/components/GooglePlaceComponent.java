@@ -77,7 +77,9 @@ public class GooglePlaceComponent extends InputText {
     
     protected enum PropertyKeys {
 
-    	place;
+    	place,
+    	loadAPI,
+    	googleAPIKey;
 
     	/*
     	useClientLocation, // if true will bias search to addresses closest to user's location
@@ -108,6 +110,32 @@ public class GooglePlaceComponent extends InputText {
 		handleAttribute(PropertyKeys.place.toString(), _placeResult);
 	}
 
+	/**
+	 * true to emit <script> tag to load Google Places API
+	 * @return
+	 */
+	public Boolean getLoadAPI() {
+		return (Boolean) getStateHelper().eval(PropertyKeys.loadAPI, null);
+	}
+
+	public void setLoadAPI(Boolean value) {
+		getStateHelper().put(PropertyKeys.loadAPI, value);
+		handleAttribute(PropertyKeys.loadAPI.toString(), value);
+	}
+
+	/**
+	 * Gets Google Places API key
+	 * @return
+	 */
+	public String getGoogleAPIKey() {
+		return (String) getStateHelper().eval(PropertyKeys.googleAPIKey, null);
+	}
+
+	public void setGoogleAPIKey(String value) {
+		getStateHelper().put(PropertyKeys.googleAPIKey, value);
+		handleAttribute(PropertyKeys.googleAPIKey.toString(), value);
+	}
+	
 	public String getPlaceResultElementId(FacesContext context) {
 		return this.getClientId(context) + UINamingContainer.getSeparatorChar(context) + GC_ID;
 	}
