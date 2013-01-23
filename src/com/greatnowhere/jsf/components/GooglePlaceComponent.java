@@ -79,12 +79,9 @@ public class GooglePlaceComponent extends InputText {
 
     	place,
     	loadAPI,
-    	googleAPIKey;
-
-    	/*
-    	useClientLocation, // if true will bias search to addresses closest to user's location
-    	*/ 
-    	
+    	googleAPIKey,
+    	restrictCountry,
+    	useClientLocation; // if true will bias search to addresses closest to user's location
     	
         String toString;
         PropertyKeys(String toString) { this.toString = toString; }
@@ -124,6 +121,23 @@ public class GooglePlaceComponent extends InputText {
 	}
 
 	/**
+	 * If true, will try to use browser's built in geolocation to determine user's location 
+	 * and bias search results towards it
+	 * Default is true
+	 * @return
+	 */
+	public Boolean getUseClientLocation() {
+		Boolean _retval = (Boolean) getStateHelper().eval(PropertyKeys.useClientLocation, null);
+		if ( _retval == null ) _retval = true;
+		return _retval;
+	}
+
+	public void setUseClientLocation(Boolean value) {
+		getStateHelper().put(PropertyKeys.useClientLocation, value);
+		handleAttribute(PropertyKeys.useClientLocation.toString(), value);
+	}
+	
+	/**
 	 * Gets Google Places API key
 	 * @return
 	 */
@@ -134,6 +148,21 @@ public class GooglePlaceComponent extends InputText {
 	public void setGoogleAPIKey(String value) {
 		getStateHelper().put(PropertyKeys.googleAPIKey, value);
 		handleAttribute(PropertyKeys.googleAPIKey.toString(), value);
+	}
+	
+	
+	/**
+	 * If set, will pass componentRestrictions: {country: 'isocode'} to Google API thus restricting search results to a specified country
+	 * Accepts ISO code 
+	 * @return
+	 */
+	public String getRestrictCountry() {
+		return (String) getStateHelper().eval(PropertyKeys.restrictCountry, null);
+	}
+
+	public void setRestrictCountry(String value) {
+		getStateHelper().put(PropertyKeys.restrictCountry, value);
+		handleAttribute(PropertyKeys.restrictCountry.toString(), value);
 	}
 	
 	public String getPlaceResultElementId(FacesContext context) {

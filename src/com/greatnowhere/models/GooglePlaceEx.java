@@ -72,9 +72,10 @@ public class GooglePlaceEx extends GooglePlace {
 	 */
 	protected String searchAddressComponent(int nameType, AddressComponentType componentType) {
 		String retval = "";
+		if ( addressComponents == null ) return retval;
 		for ( AddressComponent c : addressComponents ) {
 			for ( AddressComponentType t : c.types ) {
-				if ( t.equals(componentType) ) {
+				if ( t != null && t.equals(componentType) ) {
 					retval = ( nameType == 0 ? c.longName : c.shortName );
 					break;
 				}

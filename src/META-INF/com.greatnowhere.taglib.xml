@@ -14,7 +14,7 @@
 		<attribute>
 			<description><![CDATA[Value expression evaluating to GooglePlace object]]></description>
 			<name>place</name>
-			<required>false</required>
+			<required>true</required>
 			<type>java.lang.Object</type>
 		</attribute>
 		<attribute>
@@ -26,6 +26,18 @@
 		<attribute>
 			<description><![CDATA[Google API key]]></description>
 			<name>googleAPIKey</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[If true (default) will bias search results towards user's current location. This will cause browser to prompt user whether he wants to allow to share his location]]></description>
+			<name>useClientLocation</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[ISO code of a country to which search results are restricted to]]></description>
+			<name>restrictCountry</name>
 			<required>false</required>
 			<type>java.lang.String</type>
 		</attribute>

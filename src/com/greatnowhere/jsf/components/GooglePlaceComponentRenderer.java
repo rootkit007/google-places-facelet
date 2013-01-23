@@ -57,7 +57,10 @@ public class GooglePlaceComponentRenderer extends InputTextRenderer {
         		// specify types to appear in results
         		"jQuery(function(){\n" +
         			// TODO: make types configurable via attribute
-        			"var options={types:['geocode','establishment'] };" + // allowed types are geocode and establishment
+        			// allowed types are geocode and establishment
+        			"var options={types:['geocode','establishment'] " +
+        				( _component.getRestrictCountry() != null ? ",componentRestrictions: {country: '" + _component.getRestrictCountry() +  "'}" : "" ) +
+        			"};\n" + 
         			"var autocomplete=new google.maps.places.Autocomplete(" + _component.resolveWidgetVar() + ".getJQ().get(0),options);\n" +
         			"google.maps.event.addListener(autocomplete, 'place_changed', function() {\n" +
 	        			"var place=autocomplete.getPlace();\n" + // handler for user selection
@@ -65,13 +68,15 @@ public class GooglePlaceComponentRenderer extends InputTextRenderer {
 	        				"jQuery(PrimeFaces.escapeClientId('" + placeResultId + "')).val(JSON.stringify(place));\n" +
     					"}\n" +
         				_component.resolveWidgetVar() + ".getJQ().trigger('place_changed');\n" + // Google events do not trigger DOM events so have to do it manually 
-	        		"});" +
-	        		"if (navigator.geolocation) {\n" + // allow for automatic search results bias towards user location
-	        			"navigator.geolocation.getCurrentPosition(function(position) {\n" +
-	        				"var geolocation=new google.maps.LatLng(position.coords.latitude,position.coords.longitude); \n" +
-	        				"autocomplete.setBounds(new google.maps.LatLngBounds(geolocation, geolocation));\n" +
-	        			"});\n" +
-	        		"}\n" +
+	        		"});\n" +
+        			( _component.getUseClientLocation() ? 
+        					"if (navigator.geolocation) {\n" + // allow for automatic search results bias towards user location
+		        			"navigator.geolocation.getCurrentPosition(function(position) {\n" +
+		        				"var geolocation=new google.maps.LatLng(position.coords.latitude,position.coords.longitude); \n" +
+		        				"autocomplete.setBounds(new google.maps.LatLngBounds(geolocation, geolocation));\n" +
+		        				"});\n" +
+		        			"}\n" 
+		        		: "" ) +
         		"});\n"
         );
 
